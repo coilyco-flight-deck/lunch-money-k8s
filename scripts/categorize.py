@@ -2,11 +2,17 @@
 
 Rerunnable: categories that already exist are skipped, so this doubles as a
 monthly cleanup pass. Matching is case-insensitive payee-prefix, first rule wins.
+The lookback window defaults to 90 days, overridable with LUNCH_MONEY_CATEGORIZE_DAYS.
 """
+
+import os
+from datetime import date, timedelta
 
 from lunch_money_mcp.client import LunchMoney
 from lunch_money_mcp.rules import load_rules, match_category
 from lunch_money_mcp.server import list_transactions
+
+LOOKBACK_DAYS = int(os.environ.get("LUNCH_MONEY_CATEGORIZE_DAYS", "90"))
 
 
 def main() -> None:
@@ -26,7 +32,8 @@ def main() -> None:
         print(f"created {name} -> {name_to_id[name]}")
 
     rules = config["rules"]
-    txns = list_transactions(uncategorized_only=True)
+    start = (date.today() - timedelta(days=LOOKBACK_DAYS)).isoformat()
+    txns = list_transactions(start_date=start, uncategorized_only=True)
     assigned, unmatched = 0, []
     for t in txns:
         payee = t.get("payee") or ""
