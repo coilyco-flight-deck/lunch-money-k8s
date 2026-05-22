@@ -5,6 +5,10 @@ metadata:
   name: {{ include "lunch-money-k8s.fullname" . }}-rules
   labels:
     {{- include "lunch-money-k8s.labels" . | nindent 4 }}
+  {{- with .Values.commonAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 data:
   rules.yaml: |
     {{- .Values.rules.inline | nindent 4 }}

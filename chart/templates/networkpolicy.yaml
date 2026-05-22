@@ -1,0 +1,35 @@
+{{- if .Values.networkPolicy.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "lunch-money-k8s.fullname" . }}
+  labels:
+    {{- include "lunch-money-k8s.labels" . | nindent 4 }}
+  {{- with .Values.commonAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "lunch-money-k8s.selectorLabels" . | nindent 6 }}
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    # Allow traffic to the http port from anywhere in the cluster.
+    - ports:
+        - protocol: TCP
+          port: 8080
+  egress:
+    # DNS resolution.
+    - ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+    # HTTPS out to the Lunch Money API and AWS SSM.
+    - ports:
+        - protocol: TCP
+          port: 443
+{{- end }}
