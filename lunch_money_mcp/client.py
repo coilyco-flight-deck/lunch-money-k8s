@@ -126,9 +126,7 @@ class LunchMoney:
         return self._post("/categories/group", {"name": name, "category_ids": category_ids})
 
     def add_to_category_group(self, group_id: int, category_ids: list[int]) -> dict:
-        return self._post(
-            f"/categories/group/{group_id}/add", {"category_ids": category_ids}
-        )
+        return self._post(f"/categories/group/{group_id}/add", {"category_ids": category_ids})
 
     def update_category(self, category_id: int, fields: dict) -> dict:
         return self._put(f"/categories/{category_id}", fields)
