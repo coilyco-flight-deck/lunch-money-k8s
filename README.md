@@ -46,3 +46,9 @@ real payees never get committed) and edit it for your own spending.
 ## License
 
 AGPL-3.0. See [LICENSE](LICENSE).
+
+## See also
+
+- [docs/FEATURES.md](docs/FEATURES.md) - inventory of what ships today.
+- [docs/deploy.md](docs/deploy.md) - Kubernetes deployment notes.
+- [AGENTS.md](AGENTS.md) - agent instructions.
