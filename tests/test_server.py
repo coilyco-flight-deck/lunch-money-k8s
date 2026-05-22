@@ -24,5 +24,17 @@ def test_full_tool_surface_registered():
     from lunch_money_mcp.server import mcp
 
     names = {t.name for t in mcp._tool_manager.list_tools()}
-    assert {"get_user_profile", "upsert_budget", "list_crypto", "list_tags"} <= names
-    assert len(names) >= 20
+    expected = {
+        "get_user_profile",
+        "api_version",
+        "upsert_budget",
+        "list_crypto",
+        "update_crypto",
+        "list_tags",
+        "split_transaction",
+        "unsplit_transactions",
+        "add_to_category_group",
+        "trigger_plaid_fetch",
+    }
+    assert expected <= names
+    assert len(names) >= 30

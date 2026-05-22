@@ -37,6 +37,12 @@ def get_user_profile() -> dict:
     return _api().me()
 
 
+@mcp.tool()
+def api_version() -> dict:
+    """Which Lunch Money API version this server talks to (v1 default, v2 opt-in)."""
+    return {"version": _api().version}
+
+
 # --- transactions ---
 
 
@@ -46,13 +52,29 @@ def list_transactions(
     end_date: str | None = None,
     uncategorized_only: bool = False,
     category_id: int | None = None,
+    tag_id: int | None = None,
+    asset_id: int | None = None,
+    status: str | None = None,
+    limit: int | None = None,
+    offset: int | None = None,
 ) -> list[dict]:
     """List transactions in a date range (YYYY-MM-DD). Defaults to the last 30 days.
 
-    uncategorized_only surfaces just transactions still needing a category.
+    uncategorized_only surfaces just transactions still needing a category. The
+    category_id, tag_id, asset_id, and status filters narrow server-side; limit
+    and offset paginate.
     """
     start, end = _default_range(start_date, end_date)
-    txns = _api().transactions(start, end, category_id=category_id)
+    txns = _api().transactions(
+        start,
+        end,
+        category_id=category_id,
+        tag_id=tag_id,
+        asset_id=asset_id,
+        status=status,
+        limit=limit,
+        offset=offset,
+    )
     if uncategorized_only:
         txns = [t for t in txns if not t.get("category_id")]
     return [
@@ -79,13 +101,40 @@ def get_transaction(transaction_id: int) -> dict:
 
 @mcp.tool()
 def insert_transaction(
-    transaction_date: str, payee: str, amount: float, category_id: int | None = None
+    transaction_date: str,
+    payee: str,
+    amount: float,
+    category_id: int | None = None,
+    apply_rules: bool = False,
+    skip_duplicates: bool = True,
+    check_for_recurring: bool = False,
 ) -> dict:
-    """Insert one transaction. transaction_date is YYYY-MM-DD, amount positive for spend."""
+    """Insert one transaction. transaction_date is YYYY-MM-DD, amount positive for spend.
+
+    apply_rules runs the account's rules over it, skip_duplicates drops a likely
+    duplicate, check_for_recurring flags it against recurring detection.
+    """
     txn = {"date": transaction_date, "payee": payee, "amount": amount}
     if category_id is not None:
         txn["category_id"] = category_id
-    return _api().insert_transactions([txn])
+    return _api().insert_transactions(
+        [txn],
+        apply_rules=apply_rules,
+        skip_duplicates=skip_duplicates,
+        check_for_recurring=check_for_recurring,
+    )
+
+
+@mcp.tool()
+def split_transaction(transaction_id: int, splits: list[dict]) -> dict:
+    """Split a transaction into children. Each split is {amount, category_id?, notes?}."""
+    return _api().split_transaction(transaction_id, splits)
+
+
+@mcp.tool()
+def unsplit_transactions(parent_ids: list[int]) -> dict:
+    """Undo a split, restoring the original parent transactions."""
+    return _api().unsplit_transactions(parent_ids)
 
 
 @mcp.tool()
@@ -167,6 +216,12 @@ def create_category(name: str, is_income: bool = False, exclude_from_totals: boo
 def create_category_group(name: str, category_ids: list[int]) -> dict:
     """Create a category group containing the given category ids."""
     return _api().create_category_group(name, category_ids)
+
+
+@mcp.tool()
+def add_to_category_group(group_id: int, category_ids: list[int]) -> dict:
+    """Add existing categories to an existing category group."""
+    return _api().add_to_category_group(group_id, category_ids)
 
 
 @mcp.tool()
@@ -265,9 +320,23 @@ def list_plaid_accounts() -> list[dict]:
 
 
 @mcp.tool()
+def trigger_plaid_fetch() -> dict:
+    """Trigger a transaction fetch from Plaid for all linked accounts (experimental)."""
+    return _api().trigger_plaid_fetch()
+
+
+@mcp.tool()
 def list_crypto() -> list[dict]:
     """List crypto holdings, both synced and manual."""
     return _api().crypto()
+
+
+@mcp.tool()
+def update_crypto(crypto_id: int, balance: float | None = None, name: str | None = None) -> dict:
+    """Update a manually-tracked crypto holding's balance or name."""
+    fields = {k: v for k, v in {"balance": balance, "name": name}.items() if v is not None}
+    _api().update_crypto(crypto_id, fields)
+    return {"crypto_id": crypto_id, "updated": sorted(fields)}
 
 
 # --- derived ---

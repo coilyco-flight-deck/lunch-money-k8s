@@ -4,8 +4,11 @@ What lunch-money-k8s ships today.
 
 ## MCP server
 
-- 26 tools over the Lunch Money v1 API: user profile, transactions, categories,
-  tags, recurring items, budgets, manual assets, Plaid accounts, crypto.
+- Full Lunch Money API surface: user profile, transactions (list/get/insert/
+  update/split/unsplit/groups), categories (CRUD and groups), tags, recurring
+  items, budgets, manual assets, Plaid accounts and fetch, crypto.
+- v1 and v2 API support. v1 is the default; set `LUNCH_MONEY_API_VERSION=v2`
+  (v2 is Lunch Money's open alpha). `LUNCH_MONEY_API_BASE` overrides the URL.
 - stdio transport for local MCP clients, streamable HTTP transport for running
   as a Kubernetes service.
 - API client with 429 rate-limit backoff.

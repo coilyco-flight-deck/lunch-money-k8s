@@ -27,6 +27,10 @@ uv run lunch-money-mcp
 
 Then register `uv run lunch-money-mcp` with your MCP client.
 
+The server talks to the Lunch Money v1 API by default. Set
+`LUNCH_MONEY_API_VERSION=v2` to use the v2 API (Lunch Money's open alpha);
+`LUNCH_MONEY_API_BASE` overrides the base URL.
+
 ## Run on Kubernetes
 
 ```
