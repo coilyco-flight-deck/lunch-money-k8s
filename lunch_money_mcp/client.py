@@ -137,7 +137,9 @@ class LunchMoney:
     def budgets(self, start_date: str, end_date: str) -> list:
         return self._get_list("/budgets", start_date=start_date, end_date=end_date)
 
-    def upsert_budget(self, start_date: str, category_id: int, amount: float, currency: str) -> dict:
+    def upsert_budget(
+        self, start_date: str, category_id: int, amount: float, currency: str
+    ) -> dict:
         return self._put(
             "/budgets",
             {

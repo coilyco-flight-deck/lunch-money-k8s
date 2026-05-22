@@ -125,9 +125,7 @@ def get_transaction_group(transaction_id: int) -> dict:
 
 
 @mcp.tool()
-def create_transaction_group(
-    transaction_date: str, payee: str, transaction_ids: list[int]
-) -> dict:
+def create_transaction_group(transaction_date: str, payee: str, transaction_ids: list[int]) -> dict:
     """Group existing transactions under a new parent transaction."""
     return _api().create_transaction_group(
         {"date": transaction_date, "payee": payee, "transactions": transaction_ids}
@@ -159,9 +157,7 @@ def get_category(category_id: int) -> dict:
 
 
 @mcp.tool()
-def create_category(
-    name: str, is_income: bool = False, exclude_from_totals: bool = False
-) -> dict:
+def create_category(name: str, is_income: bool = False, exclude_from_totals: bool = False) -> dict:
     """Create a category. Set exclude_from_totals for transfer-like categories."""
     result = _api().create_category(name, is_income, exclude_from_totals)
     return {"name": name, "category_id": result.get("category_id") or result.get("id")}
@@ -224,9 +220,7 @@ def list_budgets(start_date: str | None = None, end_date: str | None = None) -> 
 
 
 @mcp.tool()
-def upsert_budget(
-    category_id: int, amount: float, month: str, currency: str = "usd"
-) -> dict:
+def upsert_budget(category_id: int, amount: float, month: str, currency: str = "usd") -> dict:
     """Set the budget for a category in a month. month is the first day, YYYY-MM-01."""
     _api().upsert_budget(month, category_id, amount, currency)
     return {"category_id": category_id, "month": month, "amount": amount}
@@ -249,9 +243,7 @@ def list_assets() -> list[dict]:
 
 
 @mcp.tool()
-def create_asset(
-    name: str, type_name: str, balance: float, currency: str = "usd"
-) -> dict:
+def create_asset(name: str, type_name: str, balance: float, currency: str = "usd") -> dict:
     """Create a manual asset. type_name is e.g. cash, credit, investment, real estate."""
     return _api().create_asset(
         {"name": name, "type_name": type_name, "balance": balance, "currency": currency}
