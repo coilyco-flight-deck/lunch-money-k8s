@@ -5,6 +5,28 @@ image:
   tag: ""  # defaults to .Chart.appVersion
   pullPolicy: IfNotPresent
 
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+
 service:
   type: ClusterIP
   port: 8080
@@ -27,6 +49,12 @@ ingress:
   annotations: {}
   tls: false
 
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+
 resources:
   limits:
     memory: 256Mi
@@ -34,7 +62,6 @@ resources:
     cpu: 50m
     memory: 128Mi
 
-podAnnotations: {}
 nodeSelector: {}
 tolerations: []
 affinity: {}

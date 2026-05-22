@@ -1,4 +1,4 @@
-.PHONY: sync smoke verify dump categorize test ruff fmt docker helm-lint
+.PHONY: sync smoke verify dump categorize test ruff fmt docker helm-lint helm-template
 
 sync:
 	uv sync
@@ -29,3 +29,7 @@ docker:
 
 helm-lint:
 	helm lint chart
+
+helm-template:
+	helm template lunch-money chart --set lunchMoney.token=dummy
+	helm template lunch-money chart -f examples/values-homelab.yaml --set lunchMoney.existingSecret=x

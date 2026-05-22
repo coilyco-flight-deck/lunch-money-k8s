@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ include "lunch-money-k8s.fullname" . }}-test-connection
+  labels:
+    {{- include "lunch-money-k8s.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: test
+spec:
+  restartPolicy: Never
+  containers:
+    - name: test
+      image: busybox:1.36
+      command:
+        - sh
+        - -c
+        - >
+          nc -z {{ include "lunch-money-k8s.fullname" . }} {{ .Values.service.port }}

@@ -33,6 +33,9 @@ commands:
   helm-lint:
     run: make helm-lint
     description: Lint the Helm chart.
+  helm-template:
+    run: make helm-template
+    description: Render the Helm chart with default and example values.
 
 # Catalog metadata for the cross-repo knowledge graph.
 # Schema: coilysiren/agentic-os-kai#420 (tracker).
