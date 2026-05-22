@@ -1,0 +1,16 @@
+apiVersion: v2
+name: lunch-money-k8s
+description: A Helm chart for the Lunch Money MCP server, served over HTTP on Kubernetes.
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+home: https://github.com/coilysiren/lunch-money-k8s
+sources:
+  - https://github.com/coilysiren/lunch-money-k8s
+keywords:
+  - mcp
+  - lunch-money
+  - personal-finance
+maintainers:
+  - name: coilysiren
+    url: https://github.com/coilysiren

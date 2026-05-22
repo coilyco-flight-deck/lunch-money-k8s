@@ -1,0 +1,30 @@
+# Categorization rules. Copy this to rules.yaml and edit for your own spending.
+# rules.yaml is gitignored so your real payees never get committed.
+
+categories:
+  - name: Groceries
+  - name: Restaurants
+  - name: Transportation
+  - name: Subscriptions
+  - name: Shopping
+  - name: Utilities
+  - name: Rent
+  - name: Income
+    is_income: true
+  - name: Credit Card Payments
+    exclude_from_totals: true
+
+# payee prefix -> category. Case-insensitive, first match wins, order matters.
+# Put more specific prefixes before broader ones.
+rules:
+  - ["Whole Foods", "Groceries"]
+  - ["Trader Joe", "Groceries"]
+  - ["Starbucks", "Restaurants"]
+  - ["Uber", "Transportation"]
+  - ["Lyft", "Transportation"]
+  - ["Netflix", "Subscriptions"]
+  - ["Spotify", "Subscriptions"]
+  - ["Amazon", "Shopping"]
+  - ["Comcast", "Utilities"]
+  - ["Payroll", "Income"]
+  - ["Credit Card Payment", "Credit Card Payments"]

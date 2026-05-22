@@ -1,0 +1,47 @@
+# Per-repo command allowlist for lunch-money-k8s. Coily is the canonical entry
+# point for dev verbs here; each command delegates to a Make target.
+# Operators type `coily <verb>`, not bare `uv` - the lockdown denies that.
+
+commands:
+  sync:
+    run: make sync
+    description: Install deps via uv.
+  smoke:
+    run: make smoke
+    description: Import the server and list the registered MCP tools.
+  verify:
+    run: make verify
+    description: Live read-only smoke test against the Lunch Money API.
+  dump:
+    run: make dump
+    description: Print uncategorized transactions as TSV (id, date, amount, payee).
+  categorize:
+    run: make categorize
+    description: Seed categories from rules.yaml, then auto-categorize transactions. Rerunnable.
+  test:
+    run: make test
+    description: Run the pytest suite.
+  ruff:
+    run: make ruff
+    description: Lint + format check (no mutations).
+  fmt:
+    run: make fmt
+    description: Apply ruff fixes and formatting in place.
+  docker:
+    run: make docker
+    description: Build the container image locally.
+  helm-lint:
+    run: make helm-lint
+    description: Lint the Helm chart.
+
+# Catalog metadata for the cross-repo knowledge graph.
+# Schema: coilysiren/agentic-os-kai#420 (tracker).
+catalog:
+  kind: Component
+  type: service
+  system: personal
+  owner: kai
+  lifecycle: experimental
+  description: "MCP server for the Lunch Money API, served over HTTP and Helm-deployable to Kubernetes. Lists transactions, manages categories, auto-categorizes by payee rules."
+  providesApis:
+    - lunch-money-mcp-server

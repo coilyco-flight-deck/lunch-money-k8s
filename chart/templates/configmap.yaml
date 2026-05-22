@@ -1,0 +1,11 @@
+{{- if .Values.rules.inline }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "lunch-money-k8s.fullname" . }}-rules
+  labels:
+    {{- include "lunch-money-k8s.labels" . | nindent 4 }}
+data:
+  rules.yaml: |
+    {{- .Values.rules.inline | nindent 4 }}
+{{- end }}

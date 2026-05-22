@@ -1,0 +1,16 @@
+{{ include "lunch-money-k8s.fullname" . }} is deployed.
+
+The MCP server speaks streamable HTTP on port {{ .Values.service.port }} at /mcp.
+
+In-cluster endpoint:
+  http://{{ include "lunch-money-k8s.fullname" . }}.{{ .Release.Namespace }}.svc:{{ .Values.service.port }}/mcp
+
+{{- if .Values.ingress.enabled }}
+
+External endpoint:
+  http{{ if .Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }}/mcp
+{{- else }}
+
+Port-forward to reach it locally:
+  kubectl port-forward svc/{{ include "lunch-money-k8s.fullname" . }} {{ .Values.service.port }}:{{ .Values.service.port }}
+{{- end }}

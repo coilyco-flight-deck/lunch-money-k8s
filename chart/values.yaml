@@ -1,0 +1,40 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/coilysiren/lunch-money-k8s
+  tag: ""  # defaults to .Chart.appVersion
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+# Lunch Money API token. Either set `token` (the chart creates a Secret),
+# or set `existingSecret` to a Secret that holds the token under key `token`.
+lunchMoney:
+  token: ""
+  existingSecret: ""
+
+# Categorization rules. Paste the contents of a rules.yaml into `inline`
+# to mount it as a ConfigMap at /app/rules.yaml. Leave empty to skip.
+rules:
+  inline: ""
+
+ingress:
+  enabled: false
+  className: ""
+  host: lunch-money.example.com
+  annotations: {}
+  tls: false
+
+resources:
+  limits:
+    memory: 256Mi
+  requests:
+    cpu: 50m
+    memory: 128Mi
+
+podAnnotations: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}

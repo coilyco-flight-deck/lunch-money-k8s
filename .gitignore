@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.pyc
+.ruff_cache/
+.pytest_cache/
+
+# Per-user categorization rules - never commit real payees.
+rules.yaml
