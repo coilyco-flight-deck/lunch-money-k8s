@@ -56,3 +56,6 @@ AGPL-3.0. See [LICENSE](LICENSE).
 - [docs/FEATURES.md](docs/FEATURES.md) - inventory of what ships today.
 - [docs/deploy.md](docs/deploy.md) - Kubernetes deployment notes.
 - [AGENTS.md](AGENTS.md) - agent instructions.
+- [.coily/coily.yaml](.coily/coily.yaml) - allowlisted dev commands.
+
+Cross-reference convention from [coilysiren/agentic-os-kai#313](https://github.com/coilysiren/agentic-os-kai/issues/313).

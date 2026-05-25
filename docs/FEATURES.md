@@ -26,6 +26,8 @@ What lunch-money-k8s ships today.
 
 ## See also
 
-- [README.md](README.md) - quick start.
-- [AGENTS.md](AGENTS.md) - agent instructions.
-- [.coily/coily.yaml](.coily/coily.yaml) - dev commands.
+- [README.md](../README.md) - quick start.
+- [AGENTS.md](../AGENTS.md) - agent instructions.
+- [.coily/coily.yaml](../.coily/coily.yaml) - dev commands.
+
+Cross-reference convention from [coilysiren/agentic-os-kai#313](https://github.com/coilysiren/agentic-os-kai/issues/313).

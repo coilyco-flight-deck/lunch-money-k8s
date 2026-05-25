@@ -46,5 +46,6 @@ catalog:
   owner: kai
   lifecycle: experimental
   description: "MCP server for the Lunch Money API, served over HTTP and Helm-deployable to Kubernetes. Lists transactions, manages categories, auto-categorizes by payee rules."
+  dependsOn: []
   providesApis:
     - lunch-money-mcp-server

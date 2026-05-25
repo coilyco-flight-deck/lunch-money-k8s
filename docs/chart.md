@@ -30,7 +30,7 @@ helm install lunch-money ./chart --set lunchMoney.token=$LUNCH_MONEY_TOKEN
 - `revisionHistoryLimit`, `terminationGracePeriodSeconds`, `serviceAccount.automountServiceAccountToken` - Deployment and pod hardening knobs.
 
 Full deployment notes, including the example values file, are in
-[../docs/deploy.md](../docs/deploy.md).
+[deploy.md](deploy.md).
 
 ## Test
 
