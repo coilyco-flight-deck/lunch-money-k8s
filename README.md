@@ -4,15 +4,21 @@ An [MCP](https://modelcontextprotocol.io/) server for the [Lunch Money](https://
 deployable to [Kubernetes](https://kubernetes.io/) as a [Helm](https://helm.sh/) chart.
 Point Claude or any MCP client at it and ask about your spending in plain language.
 
-## Why this runs as a service
+## Who this is for
 
-Three things the stdio-on-a-laptop pattern can't do:
+- Homelab folks running k3s who want Claude on their phone to answer "what did I spend on groceries this week" without keeping a laptop awake.
+- People who want one MCP endpoint shared across desktop, mobile, and scheduled jobs, instead of stdio-per-device.
+- Anyone who'd rather deploy a Helm chart than learn each MCP server's bespoke install path.
+
+## Why you might try this one
+
+For read/write API coverage, this is feature parity with the [other Lunch Money MCP servers](https://lunchmoney.app/developers). Reach for it when you want the deployment shape - three things stdio-on-a-laptop can't do:
 
 - **Mobile access** - dictation-based shorthand queries from the phone. "What did I spend on groceries this week" against a [Tailscale](https://tailscale.com/)-reachable MCP works the same on the train as at the desk, no laptop awake required.
-- **Scheduled dumps and analysis** - k3s is the homelab's general-purpose scheduler, and anything in k3s inherits tailnet reach. A daily routine pulls the trailing 7 days, flags the credit-card balance, enriches opaque payees, feeds uncategorized transactions back into an opinionated [`rules.yaml`](rules.example.yaml) format (other Lunch Money MCPs don't ship one), and writes the digest into an [Obsidian](https://obsidian.md/) vault inbox.
+- **Scheduled dumps and analysis** - k3s is the homelab's general-purpose scheduler, and anything in k3s inherits tailnet reach. A daily routine pulls the trailing 7 days, flags the credit-card balance, enriches opaque payees, feeds uncategorized transactions back into an opinionated [`rules.yaml`](rules.example.yaml) format, and writes the digest into an [Obsidian](https://obsidian.md/) vault inbox.
 - **Credential isolation** - the Lunch Money API token lives in a k8s Secret materialized from AWS SSM via ExternalSecrets. The pod gets it as an env var, the MCP exposes tool calls, and the LLM never sees the underlying key. Access control sits at the tailnet boundary.
 
-Writing into the vault is what makes the daily pulls compound. Each digest becomes context for the next day's question, so over months you build up an [LLM-readable second brain](https://fortelabs.com/blog/introducing-the-ai-second-brain/) of your spending history. Today's digest is what next March's "what was that big charge again" finds.
+The daily pulls compound through the vault. Each digest becomes context for the next day's question, so today's note is what next March's "what was that big charge again" finds - an [LLM-readable second brain](https://fortelabs.com/blog/introducing-the-ai-second-brain/) built up over time.
 
 ## Tools
 
@@ -41,10 +47,8 @@ helm install lunch-money ./chart --set lunchMoney.token=$LUNCH_MONEY_TOKEN
 ```
 
 The server speaks streamable HTTP at `/mcp` on port 8080. Ingress, existing-secret
-wiring, the categorization-rules ConfigMap, and API-version overrides are covered in
-[docs/deploy.md](docs/deploy.md). A real-world Helm values file pinned to a homelab
-node lives at
-[`coilysiren/infrastructure/deploy/lunch-money/values.yaml`](https://github.com/coilysiren/infrastructure/blob/5701039c414f6b49b7977181a5743f93748be577/deploy/lunch-money/values.yaml).
+wiring, the categorization-rules ConfigMap, API-version overrides, and a real-world
+homelab values file are covered in [docs/deploy.md](docs/deploy.md).
 
 ## License
 

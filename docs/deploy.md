@@ -42,6 +42,12 @@ The server talks to the Lunch Money v1 API by default. Set
 `LUNCH_MONEY_API_VERSION=v2` to use the v2 API (Lunch Money's open alpha).
 `LUNCH_MONEY_API_BASE` overrides the base URL.
 
+## Real-world example
+
+A Helm values file pinned to the kai-server homelab node, with ExternalSecret
+and node selector wired in, lives at
+[`coilysiren/infrastructure/deploy/lunch-money/values.yaml`](https://github.com/coilysiren/infrastructure/blob/5701039c414f6b49b7977181a5743f93748be577/deploy/lunch-money/values.yaml).
+
 ## Ingress
 
 Ingress is off by default. Enable it with:
