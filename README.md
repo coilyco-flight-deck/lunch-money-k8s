@@ -42,7 +42,11 @@ Then register `uv run lunch-money-mcp` with your MCP client.
 
 ## Run on Kubernetes
 
+The chart isn't published to a registry yet ([#7](https://forgejo.coilysiren.me/coilysiren/lunch-money-k8s/issues/7)), so clone first:
+
 ```
+git clone https://github.com/coilysiren/lunch-money-k8s.git
+cd lunch-money-k8s
 helm install lunch-money ./chart --set lunchMoney.token=$LUNCH_MONEY_TOKEN
 ```
 
