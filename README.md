@@ -1,11 +1,18 @@
 # lunch-money-k8s 🍱☸️
 
-An MCP server for the [Lunch Money](https://lunchmoney.app/) personal-finance API,
-served over HTTP and deployable to Kubernetes with a Helm chart. Point Claude or any
-MCP client at it and ask about your spending in plain language.
+An [MCP](https://modelcontextprotocol.io/) server for the [Lunch Money](https://lunchmoney.app/) personal-finance API,
+deployable to [Kubernetes](https://kubernetes.io/) as a [Helm](https://helm.sh/) chart.
+Point Claude or any MCP client at it and ask about your spending in plain language.
 
-Most Lunch Money MCP servers run stdio-only on a laptop. This one runs as a service:
-containerized, Helm-installable, happy on a homelab cluster.
+## Why this runs as a service
+
+Three things the stdio-on-a-laptop pattern can't do:
+
+- **Mobile access** - dictation-based shorthand queries from the phone. "What did I spend on groceries this week" against a [Tailscale](https://tailscale.com/)-reachable MCP works the same on the train as at the desk, no laptop awake required.
+- **Scheduled dumps and analysis** - k3s is the homelab's general-purpose scheduler, and anything in k3s inherits tailnet reach. A daily routine pulls the trailing 7 days, flags the credit-card balance, enriches opaque payees, feeds uncategorized transactions back into an opinionated [`rules.yaml`](rules.example.yaml) format (other Lunch Money MCPs don't ship one), and writes the digest into an [Obsidian](https://obsidian.md/) vault inbox.
+- **Credential isolation** - the Lunch Money API token lives in a k8s Secret materialized from AWS SSM via ExternalSecrets. The pod gets it as an env var, the MCP exposes tool calls, and the LLM never sees the underlying key. Access control sits at the tailnet boundary.
+
+Writing into the vault is what makes the daily pulls compound. Each digest becomes context for the next day's question, so over months you build up an [LLM-readable second brain](https://fortelabs.com/blog/introducing-the-ai-second-brain/) of your spending history. Today's digest is what next March's "what was that big charge again" finds.
 
 ## Tools
 
@@ -27,10 +34,6 @@ uv run lunch-money-mcp
 
 Then register `uv run lunch-money-mcp` with your MCP client.
 
-The server talks to the Lunch Money v1 API by default. Set
-`LUNCH_MONEY_API_VERSION=v2` to use the v2 API (Lunch Money's open alpha);
-`LUNCH_MONEY_API_BASE` overrides the base URL.
-
 ## Run on Kubernetes
 
 ```
@@ -38,14 +41,10 @@ helm install lunch-money ./chart --set lunchMoney.token=$LUNCH_MONEY_TOKEN
 ```
 
 The server speaks streamable HTTP at `/mcp` on port 8080. Ingress, existing-secret
-wiring, and the categorization-rules ConfigMap are covered in
-[docs/deploy.md](docs/deploy.md).
-
-## Auto-categorization
-
-`scripts/categorize.py` seeds a category set and assigns transactions by
-payee-prefix rules. Copy `rules.example.yaml` to `rules.yaml` (gitignored, so your
-real payees never get committed) and edit it for your own spending.
+wiring, the categorization-rules ConfigMap, and API-version overrides are covered in
+[docs/deploy.md](docs/deploy.md). A real-world Helm values file pinned to a homelab
+node lives at
+[`coilysiren/infrastructure/deploy/lunch-money/values.yaml`](https://github.com/coilysiren/infrastructure/blob/5701039c414f6b49b7977181a5743f93748be577/deploy/lunch-money/values.yaml).
 
 ## License
 
@@ -57,5 +56,6 @@ AGPL-3.0. See [LICENSE](LICENSE).
 - [docs/deploy.md](docs/deploy.md) - Kubernetes deployment notes.
 - [AGENTS.md](AGENTS.md) - agent instructions.
 - [.coily/coily.yaml](.coily/coily.yaml) - allowlisted dev commands.
+- [MarkusPfundstein/mcp-obsidian](https://github.com/MarkusPfundstein/mcp-obsidian) - the other half of the loop. This server writes digests into a vault inbox, that MCP lets an agent read and edit vault notes through Obsidian's local REST API.
 
-Cross-reference convention from [coilysiren/agentic-os-kai#313](https://github.com/coilysiren/agentic-os-kai/issues/313).
+Cross-reference convention from [coilysiren/agentic-os#59](https://github.com/coilysiren/agentic-os/issues/59).

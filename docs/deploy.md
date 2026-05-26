@@ -23,6 +23,10 @@ The server needs a Lunch Money API token. Two ways:
 
 ## Categorization rules
 
+`scripts/categorize.py` reads a `rules.yaml` from the working directory. Copy
+[`rules.example.yaml`](../rules.example.yaml) to `rules.yaml` (gitignored) and
+edit it for your payees.
+
 To run auto-categorization in-cluster, pass a `rules.yaml` body as
 `rules.inline`. The chart mounts it as a ConfigMap at `/app/rules.yaml`:
 
@@ -31,6 +35,12 @@ helm install lunch-money ./chart \
   --set lunchMoney.token=$LUNCH_MONEY_TOKEN \
   --set-file rules.inline=rules.yaml
 ```
+
+## Configuration
+
+The server talks to the Lunch Money v1 API by default. Set
+`LUNCH_MONEY_API_VERSION=v2` to use the v2 API (Lunch Money's open alpha).
+`LUNCH_MONEY_API_BASE` overrides the base URL.
 
 ## Ingress
 
