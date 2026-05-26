@@ -31,11 +31,11 @@ Never commit a real `rules.yaml` or LUNCH_MONEY_TOKEN. Token lives in a Kubernet
 
 ## Cross-repo contracts
 
-GHCR image at `ghcr.io/coilysiren/lunch-money-k8s` is the publish target. Helm chart consumers pin against tagged releases.
+Docker Hub image at `docker.io/coilysiren/lunch-money-k8s` is the publish target. Helm chart consumers pin against tagged releases.
 
 ## Release
 
-Tagging `v<semver>` triggers CI to publish the GHCR image. Chart bumps land in the same commit as code that changes the rendered manifests.
+Tagging `v<semver>` triggers CI to publish the Docker Hub image. Chart bumps land in the same commit as code that changes the rendered manifests.
 
 ## Agent rules
 

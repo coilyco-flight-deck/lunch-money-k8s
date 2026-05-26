@@ -25,7 +25,7 @@ fmt:
 	uv run ruff check --fix . && uv run ruff format .
 
 docker:
-	docker build -t ghcr.io/coilysiren/lunch-money-k8s:dev .
+	docker build -t docker.io/coilysiren/lunch-money-k8s:dev .
 
 helm-lint:
 	helm lint chart

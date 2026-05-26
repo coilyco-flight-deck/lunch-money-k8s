@@ -4,7 +4,7 @@ The Helm chart in `chart/` runs the MCP server over streamable HTTP.
 
 ## Image
 
-The chart points at `ghcr.io/coilysiren/lunch-money-k8s`. Build your own with:
+The chart points at `docker.io/coilysiren/lunch-money-k8s`. Build your own with:
 
 ```
 docker build -t <your-registry>/lunch-money-k8s:dev .

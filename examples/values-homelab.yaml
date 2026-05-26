@@ -6,7 +6,7 @@
 # start instead, drop `existingSecret` and pass --set lunchMoney.token=...
 
 image:
-  repository: ghcr.io/coilysiren/lunch-money-k8s
+  repository: docker.io/coilysiren/lunch-money-k8s
   tag: latest
 
 lunchMoney:

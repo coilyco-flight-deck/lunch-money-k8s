@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/coilysiren/lunch-money-k8s
+  repository: docker.io/coilysiren/lunch-money-k8s
   tag: ""  # defaults to .Chart.appVersion
   pullPolicy: IfNotPresent
 
