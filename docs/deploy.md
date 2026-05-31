@@ -46,7 +46,7 @@ The server talks to the Lunch Money v1 API by default. Set
 
 A Helm values file pinned to the kai-server homelab node, with ExternalSecret
 and node selector wired in, lives at
-[`coilysiren/infrastructure/deploy/lunch-money/values.yaml`](https://github.com/coilysiren/infrastructure/blob/5701039c414f6b49b7977181a5743f93748be577/deploy/lunch-money/values.yaml).
+[`coilysiren/infrastructure/deploy/lunch-money/values.yaml`](https://github.com/coilyco-flight-deck/infrastructure/blob/5701039c414f6b49b7977181a5743f93748be577/deploy/lunch-money/values.yaml).
 
 ## Ingress
 

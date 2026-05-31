@@ -4,9 +4,9 @@ description: A Helm chart for the Lunch Money MCP server, served over HTTP on Ku
 type: application
 version: 0.2.0
 appVersion: "0.1.0"
-home: https://github.com/coilysiren/lunch-money-k8s
+home: https://github.com/coilyco-flight-deck/lunch-money-k8s
 sources:
-  - https://github.com/coilysiren/lunch-money-k8s
+  - https://github.com/coilyco-flight-deck/lunch-money-k8s
 keywords:
   - mcp
   - lunch-money

@@ -45,7 +45,7 @@ Then register `uv run lunch-money-mcp` with your MCP client.
 The chart isn't published to a registry yet ([#7](https://forgejo.coilysiren.me/coilysiren/lunch-money-k8s/issues/7)), so clone first:
 
 ```
-git clone https://github.com/coilysiren/lunch-money-k8s.git
+git clone https://github.com/coilyco-flight-deck/lunch-money-k8s.git
 cd lunch-money-k8s
 helm install lunch-money ./chart --set lunchMoney.token=$LUNCH_MONEY_TOKEN
 ```
@@ -66,4 +66,4 @@ AGPL-3.0. See [LICENSE](LICENSE).
 - [.coily/coily.yaml](.coily/coily.yaml) - allowlisted dev commands.
 - [MarkusPfundstein/mcp-obsidian](https://github.com/MarkusPfundstein/mcp-obsidian) - the other half of the loop. This server writes digests into a vault inbox, that MCP lets an agent read and edit vault notes through Obsidian's local REST API.
 
-Cross-reference convention from [coilysiren/agentic-os#59](https://github.com/coilysiren/agentic-os/issues/59).
+Cross-reference convention from [coilysiren/agentic-os#59](https://github.com/coilyco-flight-deck/agentic-os/issues/59).
