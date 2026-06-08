@@ -13,20 +13,15 @@ serviceAccount:
   create: true
   annotations: {}
   name: ""
-  # The server never calls the Kubernetes API, so do not mount a token.
-  automountServiceAccountToken: false
+  automountServiceAccountToken: false  # server never calls the K8s API, so no token
 
-# Old ReplicaSets the Deployment keeps around for rollback.
-revisionHistoryLimit: 3
+revisionHistoryLimit: 3  # old ReplicaSets the Deployment keeps for rollback
 
-# Grace period for the pod to shut down cleanly before SIGKILL.
-terminationGracePeriodSeconds: 30
+terminationGracePeriodSeconds: 30  # grace period for clean shutdown before SIGKILL
 
-# Labels merged onto every rendered resource.
-commonLabels: {}
+commonLabels: {}  # merged onto every rendered resource
 
-# Annotations merged onto every rendered resource.
-commonAnnotations: {}
+commonAnnotations: {}  # merged onto every rendered resource
 
 podAnnotations: {}
 
@@ -45,16 +40,12 @@ service:
   type: ClusterIP
   port: 8080
 
-# Lunch Money API token. Either set `token` (the chart creates a Secret),
-# or set `existingSecret` to a Secret that holds the token under key `token`.
-lunchMoney:
-  token: ""
-  existingSecret: ""
+lunchMoney:  # Lunch Money API token; see docs/chart.md for token vs existingSecret
+  token: ""  # set to have the chart create a Secret
+  existingSecret: ""  # name of a Secret holding the token under key `token`
 
-# Categorization rules. Paste the contents of a rules.yaml into `inline`
-# to mount it as a ConfigMap at /app/rules.yaml. Leave empty to skip.
-rules:
-  inline: ""
+rules:  # categorization rules; see docs/chart.md for the inline/ConfigMap flow
+  inline: ""  # paste a rules.yaml here to mount it at /app/rules.yaml; empty skips
 
 ingress:
   enabled: false
@@ -76,44 +67,33 @@ resources:
     cpu: 50m
     memory: 128Mi
 
-# Health probes. Each block is passed straight through to the container.
-# Override the whole block to change probe style, or set it to {} (or null)
-# to disable that probe. Defaults match the original tcpSocket-on-http checks.
-livenessProbe:
+livenessProbe:  # passed straight to the container; set {} or null to disable, see docs/chart.md
   tcpSocket:
     port: http
   initialDelaySeconds: 10
-readinessProbe:
+readinessProbe:  # passed straight to the container; set {} or null to disable
   tcpSocket:
     port: http
   initialDelaySeconds: 5
-# Off by default. Fill in a probe block to gate startup before liveness runs.
-startupProbe: {}
+startupProbe: {}  # off by default; fill a probe block to gate startup before liveness
 
-# Extra env vars appended to the container. List of standard env entries.
-extraEnv: []
-# Extra envFrom sources for the container. List of standard envFrom entries.
-extraEnvFrom: []
+extraEnv: []  # extra env vars appended to the container
+extraEnvFrom: []  # extra envFrom sources for the container
 
-# Extra volumes and mounts, merged with the rules ConfigMap volume.
-extraVolumes: []
+extraVolumes: []  # merged with the rules ConfigMap volume
 extraVolumeMounts: []
 
-# Container lifecycle hooks, rendered as the `lifecycle:` block when set.
-lifecycleHooks: {}
+lifecycleHooks: {}  # rendered as the `lifecycle:` block when set
 
-# Override the container entrypoint and arguments. Empty means use the image defaults.
-command: []
+command: []  # override the container entrypoint; empty uses image defaults
 args: []
 
-# PodDisruptionBudget. Set one of minAvailable / maxUnavailable when enabled.
-podDisruptionBudget:
+podDisruptionBudget:  # set minAvailable or maxUnavailable when enabled
   enabled: false
   minAvailable: 1
   maxUnavailable: ""
 
-# NetworkPolicy. When on, allows DNS and HTTPS egress plus ingress to the http port.
-networkPolicy:
+networkPolicy:  # when on, allows DNS+HTTPS egress and ingress to the http port
   enabled: false
 
 nodeSelector: {}

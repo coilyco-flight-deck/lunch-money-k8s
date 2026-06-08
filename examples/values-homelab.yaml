@@ -1,9 +1,4 @@
-# Example values for a homelab install of lunch-money-k8s.
-# Install:  helm install lunch-money ./chart -f examples/values-homelab.yaml
-#
-# This example uses an existing Secret for the token (created out of band,
-# e.g. by an ExternalSecret pulling from a parameter store). For a quick
-# start instead, drop `existingSecret` and pass --set lunchMoney.token=...
+# Example homelab values; install steps and token options live in docs/deploy.md.
 
 image:
   repository: docker.io/coilysiren/lunch-money-k8s
@@ -12,8 +7,7 @@ image:
 lunchMoney:
   existingSecret: lunch-money-token
 
-# Pin to a single node if the cluster is mixed-architecture.
-nodeSelector:
+nodeSelector:  # pin to a single node if the cluster is mixed-architecture
   kubernetes.io/hostname: kai-server
 
 resources:
@@ -23,8 +17,7 @@ resources:
   limits:
     memory: 256Mi
 
-# Auto-categorization rules mounted at /app/rules.yaml. Replace with your own.
-rules:
+rules:  # auto-categorization rules mounted at /app/rules.yaml; replace with your own
   inline: |
     categories:
       - name: Groceries

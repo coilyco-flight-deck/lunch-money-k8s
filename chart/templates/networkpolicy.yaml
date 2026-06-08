@@ -17,19 +17,16 @@ spec:
     - Ingress
     - Egress
   ingress:
-    # Allow traffic to the http port from anywhere in the cluster.
-    - ports:
+    - ports:  # http port, reachable from anywhere in the cluster
         - protocol: TCP
           port: 8080
   egress:
-    # DNS resolution.
-    - ports:
+    - ports:  # DNS resolution
         - protocol: UDP
           port: 53
         - protocol: TCP
           port: 53
-    # HTTPS out to the Lunch Money API and AWS SSM.
-    - ports:
+    - ports:  # HTTPS out to the Lunch Money API and AWS SSM
         - protocol: TCP
           port: 443
 {{- end }}

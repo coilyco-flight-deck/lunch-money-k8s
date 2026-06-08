@@ -1,5 +1,4 @@
-# Categorization rules. Copy this to rules.yaml and edit for your own spending.
-# rules.yaml is gitignored so your real payees never get committed.
+# Categorization rules. Copy to rules.yaml (gitignored) and edit for your own spending.
 
 categories:
   - name: Groceries
@@ -14,9 +13,7 @@ categories:
   - name: Credit Card Payments
     exclude_from_totals: true
 
-# payee prefix -> category. Case-insensitive, first match wins, order matters.
-# Put more specific prefixes before broader ones.
-rules:
+rules:  # payee prefix -> category; case-insensitive, first match wins, specific first
   - ["Whole Foods", "Groceries"]
   - ["Trader Joe", "Groceries"]
   - ["Starbucks", "Restaurants"]

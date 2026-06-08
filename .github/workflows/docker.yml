@@ -1,8 +1,5 @@
+# Builds and pushes docker.io/coilysiren/lunch-money-k8s; tags set in Compute tags step.
 name: docker
-
-# Build the container and push it to Docker Hub. On main, tags `latest`
-# plus a short-sha. On a v* tag, tags the release version. Anyone deploying
-# the Helm chart pulls docker.io/coilysiren/lunch-money-k8s from here.
 
 on:
   push:

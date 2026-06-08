@@ -29,3 +29,12 @@ line-length = 100
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.agentic-os.code-comments]
+# YAML enforcement landed at agentic-os v0.14.0, tree cleaned at v0.16.0 (#17). The
+# only exclude is the managed-hooks marker file: its BEGIN/END comments are structural,
+# required by apply-agentic-os-hooks.py at fixed positions, so they cannot move to
+# line 1. agentic-os excludes its own .pre-commit-config.yaml for the same reason.
+excludes = [
+    ".pre-commit-config.yaml",
+]
