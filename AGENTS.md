@@ -19,7 +19,7 @@ This repo owns the MCP server, the Helm chart, and the auto-categorization scrip
 
 ## Commands
 
-Route every dev command through coily, which reads [`.coily/coily.yaml`](.coily/coily.yaml).
+Route every dev command through ward, which reads [`.ward/ward.yaml`](.ward/ward.yaml) (run verbs with `ward exec <verb>`).
 
 ## Validation
 
@@ -45,6 +45,7 @@ Commit to `main`, push after each commit. Every commit closes a same-repo issue 
 
 - [README.md](README.md) - human-facing intro and quick start.
 - [docs/FEATURES.md](docs/FEATURES.md) - inventory of what ships today.
-- [.coily/coily.yaml](.coily/coily.yaml) - allowlisted dev commands.
+- [.ward/ward.yaml](.ward/ward.yaml) - allowlisted dev commands (`ward exec <verb>`).
+- [.coily/coily.yaml](.coily/coily.yaml) - retained during migration.
 
 Cross-reference convention from [coilysiren/agentic-os-kai#313](https://github.com/coilyco-bridge/agentic-os-kai/issues/313).
