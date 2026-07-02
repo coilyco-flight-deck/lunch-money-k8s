@@ -63,7 +63,7 @@ AGPL-3.0. See [LICENSE](LICENSE).
 - [docs/FEATURES.md](docs/FEATURES.md) - inventory of what ships today.
 - [docs/deploy.md](docs/deploy.md) - Kubernetes deployment notes.
 - [AGENTS.md](AGENTS.md) - agent instructions.
-- [.coily/coily.yaml](.coily/coily.yaml) - allowlisted dev commands.
+- [.ward/ward.yaml](.ward/ward.yaml) - allowlisted dev commands (`ward exec <verb>`).
 - [MarkusPfundstein/mcp-obsidian](https://github.com/MarkusPfundstein/mcp-obsidian) - the other half of the loop. This server writes digests into a vault inbox, that MCP lets an agent read and edit vault notes through Obsidian's local REST API.
 
 Cross-reference convention from [coilysiren/agentic-os#59](https://github.com/coilyco-flight-deck/agentic-os/issues/59).
