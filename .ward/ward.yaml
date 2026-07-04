@@ -1,4 +1,4 @@
-# Per-repo coily command allowlist; each verb delegates to a Make target. See AGENTS.md.
+# Per-repo ward command allowlist; each verb delegates to a Make target. See AGENTS.md.
 
 commands:
   sync:
