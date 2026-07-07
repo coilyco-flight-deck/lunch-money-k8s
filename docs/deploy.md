@@ -12,6 +12,20 @@ docker build -t <your-registry>/lunch-money-k8s:dev .
 
 Override `image.repository` and `image.tag` in values to use it.
 
+## Continuous integration
+
+Canonical CI is Forgejo, in `.forgejo/workflows/build-publish.yml`. On every
+push to `main` it runs **test** (`pytest` + `ruff`), **helm** (`helm lint` and a
+`helm template` render), then **publish** - build the image and push it to the
+in-cluster registry `192.168.0.194:30500/lunch-money-mcp`, tagged `sha-<short>`
+(the 7-char commit sha the deploy bundle pins) and `latest`.
+
+The publish job installs the static docker binary and probes for the DinD
+sidecar, which carries `--insecure-registry=192.168.0.194:30500` so the
+plain-HTTP push round-trips. GitHub is a PR mirror only - no image build. The
+former GitHub Actions -> Docker Hub path (`.github/workflows/docker.yml`) is
+retired.
+
 ## Token
 
 The server needs a Lunch Money API token. Two ways:
