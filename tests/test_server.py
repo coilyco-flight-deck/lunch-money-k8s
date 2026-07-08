@@ -84,7 +84,10 @@ def test_transport_security_merges_local_defaults_and_env(monkeypatch):
 def test_build_mcp_applies_http_env(monkeypatch):
     monkeypatch.setenv("LUNCH_MONEY_MCP_HOST", "0.0.0.0")
     monkeypatch.setenv("LUNCH_MONEY_MCP_PORT", "30080")
-    monkeypatch.setenv("LUNCH_MONEY_MCP_ALLOWED_HOSTS", "lunch-money.coilysiren.me")
+    monkeypatch.setenv(
+        "LUNCH_MONEY_MCP_ALLOWED_HOSTS",
+        "lunch-money.coilysiren.me,lunch-money.coilysiren.me:443",
+    )
     monkeypatch.setenv("LUNCH_MONEY_MCP_ALLOWED_ORIGINS", "https://lunch-money.coilysiren.me")
 
     mcp = _build_mcp()
@@ -92,4 +95,5 @@ def test_build_mcp_applies_http_env(monkeypatch):
     assert mcp.settings.host == "0.0.0.0"
     assert mcp.settings.port == 30080
     assert "lunch-money.coilysiren.me" in mcp.settings.transport_security.allowed_hosts
+    assert "lunch-money.coilysiren.me:443" in mcp.settings.transport_security.allowed_hosts
     assert "https://lunch-money.coilysiren.me" in mcp.settings.transport_security.allowed_origins
