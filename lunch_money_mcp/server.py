@@ -5,10 +5,37 @@ from collections import defaultdict
 from datetime import date, timedelta
 
 from mcp.server.fastmcp import FastMCP
+from mcp.server.fastmcp.server import TransportSecuritySettings
 
 from lunch_money_mcp.client import LunchMoney
 
-mcp = FastMCP("lunch-money")
+DEFAULT_ALLOWED_HOSTS = ["127.0.0.1:*", "localhost:*", "[::1]:*"]
+DEFAULT_ALLOWED_ORIGINS = ["http://127.0.0.1:*", "http://localhost:*", "http://[::1]:*"]
+
+
+def _parse_csv_env(name: str) -> list[str]:
+    raw = os.environ.get(name, "")
+    return [value.strip() for value in raw.split(",") if value.strip()]
+
+
+def _transport_security() -> TransportSecuritySettings:
+    return TransportSecuritySettings(
+        enable_dns_rebinding_protection=True,
+        allowed_hosts=DEFAULT_ALLOWED_HOSTS + _parse_csv_env("LUNCH_MONEY_MCP_ALLOWED_HOSTS"),
+        allowed_origins=DEFAULT_ALLOWED_ORIGINS + _parse_csv_env("LUNCH_MONEY_MCP_ALLOWED_ORIGINS"),
+    )
+
+
+def _build_mcp() -> FastMCP:
+    return FastMCP(
+        "lunch-money",
+        host=os.environ.get("LUNCH_MONEY_MCP_HOST", "0.0.0.0"),
+        port=int(os.environ.get("LUNCH_MONEY_MCP_PORT", "8080")),
+        transport_security=_transport_security(),
+    )
+
+
+mcp = _build_mcp()
 
 # Lazily constructed so the server imports without a token present.
 _client: LunchMoney | None = None
@@ -363,8 +390,6 @@ def main() -> None:
     """Run over stdio, or streamable HTTP when LUNCH_MONEY_MCP_TRANSPORT=http."""
     transport = os.environ.get("LUNCH_MONEY_MCP_TRANSPORT", "stdio")
     if transport in ("http", "streamable-http"):
-        mcp.settings.host = os.environ.get("LUNCH_MONEY_MCP_HOST", "0.0.0.0")
-        mcp.settings.port = int(os.environ.get("LUNCH_MONEY_MCP_PORT", "8080"))
         mcp.run(transport="streamable-http")
     else:
         mcp.run()

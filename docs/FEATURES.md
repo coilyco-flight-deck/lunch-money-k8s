@@ -10,7 +10,8 @@ What lunch-money-k8s ships today.
 - v1 and v2 API support. v1 is the default; set `LUNCH_MONEY_API_VERSION=v2`
   (v2 is Lunch Money's open alpha). `LUNCH_MONEY_API_BASE` overrides the URL.
 - stdio transport for local MCP clients, streamable HTTP transport for running
-  as a Kubernetes service.
+  as a Kubernetes service, with env-driven HTTP host and origin allowlists for
+  DNS rebinding protection.
 - API client with 429 rate-limit backoff.
 
 ## Deployment
