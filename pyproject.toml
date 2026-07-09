@@ -1,7 +1,7 @@
 [project]
 name = "lunch-money-k8s"
 version = "0.1.0"
-description = "MCP server for the Lunch Money API, containerized and Helm-deployable to Kubernetes."
+description = "MCP server for the Lunch Money API, containerized and served over streamable HTTP."
 license = "AGPL-3.0-only"
 requires-python = ">=3.12"
 dependencies = [

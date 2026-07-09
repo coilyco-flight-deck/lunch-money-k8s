@@ -1,4 +1,4 @@
-.PHONY: sync smoke verify dump categorize test ruff fmt docker helm-lint helm-template
+.PHONY: sync smoke verify dump categorize test ruff fmt docker
 
 sync:
 	uv sync
@@ -26,10 +26,3 @@ fmt:
 
 docker:
 	docker build -t docker.io/coilysiren/lunch-money-k8s:dev .
-
-helm-lint:
-	helm lint chart
-
-helm-template:
-	helm template lunch-money chart --set lunchMoney.token=dummy
-	helm template lunch-money chart -f examples/values-homelab.yaml --set lunchMoney.existingSecret=x

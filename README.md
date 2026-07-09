@@ -1,14 +1,14 @@
 # lunch-money-k8s 🍱☸️
 
 An [MCP](https://modelcontextprotocol.io/) server for the [Lunch Money](https://lunchmoney.app/) personal-finance API,
-deployable to [Kubernetes](https://kubernetes.io/) as a [Helm](https://helm.sh/) chart.
+packaged as a container image and served over streamable HTTP.
 Point Claude or any MCP client at it and ask about your spending in plain language.
 
 ## Who this is for
 
 - Homelab folks running k3s who want Claude on their phone to answer "what did I spend on groceries this week" without keeping a laptop awake.
 - People who want one MCP endpoint shared across desktop, mobile, and scheduled jobs, instead of stdio-per-device.
-- Anyone who'd rather deploy a Helm chart than learn each MCP server's bespoke install path.
+- Anyone who'd rather deploy a shared MCP endpoint than learn each server's bespoke install path.
 
 ## Why you might try this one
 
@@ -40,19 +40,14 @@ uv run lunch-money-mcp
 
 Then register `uv run lunch-money-mcp` with your MCP client.
 
-## Run on Kubernetes
+## Fleet deploy
 
-The chart isn't published to a registry yet ([#7](https://forgejo.coilysiren.me/coilysiren/lunch-money-k8s/issues/7)), so clone first:
+The Kubernetes deploy bundle now lives in `coilyco-bridge/deploy/services/lunch-money-mcp/`.
+It owns the manifest, secret wiring, ingress, and rollout details. This repo keeps the app
+source and Docker image build only.
 
-```
-git clone https://github.com/coilyco-flight-deck/lunch-money-k8s.git
-cd lunch-money-k8s
-helm install lunch-money ./chart --set lunchMoney.token=$LUNCH_MONEY_TOKEN
-```
-
-The server speaks streamable HTTP at `/mcp` on port 8080. Ingress, existing-secret
-wiring, the categorization-rules ConfigMap, API-version overrides, and a real-world
-homelab values file are covered in [docs/deploy.md](docs/deploy.md).
+The server speaks streamable HTTP at `/mcp` on port 8080. Deployment notes are in
+[docs/deploy.md](docs/deploy.md).
 
 ## License
 
@@ -61,7 +56,7 @@ AGPL-3.0. See [LICENSE](LICENSE).
 ## See also
 
 - [docs/FEATURES.md](docs/FEATURES.md) - inventory of what ships today.
-- [docs/deploy.md](docs/deploy.md) - Kubernetes deployment notes.
+- [docs/deploy.md](docs/deploy.md) - fleet deploy pointer.
 - [AGENTS.md](AGENTS.md) - agent instructions.
 - [.ward/ward.yaml](.ward/ward.yaml) - allowlisted dev commands (`ward exec <verb>`).
 - [MarkusPfundstein/mcp-obsidian](https://github.com/MarkusPfundstein/mcp-obsidian) - the other half of the loop. This server writes digests into a vault inbox, that MCP lets an agent read and edit vault notes through Obsidian's local REST API.

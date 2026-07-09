@@ -4,18 +4,18 @@ Repo-local subset. Full operating context for Kai lives in `coilysiren/agentic-o
 
 ## Scope
 
-MCP server for the Lunch Money personal-finance API. Containerized, served over streamable HTTP, deployable to Kubernetes via a Helm chart.
+MCP server for the Lunch Money personal-finance API. Containerized, served over streamable HTTP, with fleet deployment handled from `coilyco-bridge/deploy`.
 
 ## Project shape
 
 - `lunch_money_mcp/` - Python package, the MCP server itself.
-- `chart/` - Helm chart for deployment.
+- `Dockerfile` - image build for the MCP server.
 - `scripts/categorize.py` - auto-categorization driver.
-- `docs/` - flat documentation (deploy, chart, FEATURES).
+- `docs/` - flat documentation (deploy, FEATURES).
 
 ## Repo boundaries
 
-This repo owns the MCP server, the Helm chart, and the auto-categorization script. The Lunch Money API and its v1/v2 shape live upstream and are not maintained here.
+This repo owns the MCP server source, the image build, and the auto-categorization script. The Lunch Money API and its v1/v2 shape live upstream and are not maintained here.
 
 ## Commands
 
@@ -31,11 +31,11 @@ Never commit a real `rules.yaml` or LUNCH_MONEY_TOKEN. Token lives in a Kubernet
 
 ## Cross-repo contracts
 
-Docker Hub image at `docker.io/coilysiren/lunch-money-k8s` is the publish target. Helm chart consumers pin against tagged releases.
+Docker Hub image at `docker.io/coilysiren/lunch-money-k8s` is the publish target. The fleet deploy repo consumes it from `coilyco-bridge/deploy/services/lunch-money-mcp/`.
 
 ## Release
 
-Tagging `v<semver>` triggers CI to publish the Docker Hub image. Chart bumps land in the same commit as code that changes the rendered manifests.
+Tagging `v<semver>` triggers CI to publish the Docker Hub image. Deploy changes land in the fleet repo, not here.
 
 ## Agent rules
 
