@@ -17,9 +17,11 @@ What lunch-money-k8s ships today.
 ## Deployment
 
 - Dockerfile building a slim uv-based image. Forgejo CI
-  (`.forgejo/workflows/build-publish.yml`) tests, helm-lints, then builds and
-  pushes `192.168.0.194:30500/lunch-money-mcp:sha-<short>` (plus `latest`) to
-  the in-cluster registry on every push to main. GitHub is a PR mirror only, no
+  (`.forgejo/workflows/build-publish.yml`) runs the test and publish jobs in
+  the pinned aos dev-base image, while the separate helm job still does the
+  chart checks. The workflow pushes
+  `192.168.0.194:30500/lunch-money-mcp:sha-<short>` (plus `latest`) to the
+  in-cluster registry on every push to main. GitHub is a PR mirror only, no
   image build.
 - Helm chart: Deployment, Service, ServiceAccount, HorizontalPodAutoscaler,
   Secret, rules ConfigMap, optional Ingress, and a helm test connection probe.
