@@ -28,6 +28,12 @@ jobs:
       - run: uv run ruff check .
       - run: uv run ruff format --check .
 
+      - name: Alert Telegram on main failure
+        if: ${{ failure() && github.ref == 'refs/heads/main' }}
+        uses: coilyco-flight-deck/agentic-os/actions/telegram-alert@main
+        with:
+          bot-token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          chat-id: ${{ secrets.TELEGRAM_RED_CHAT_ID }}
   helm:
     runs-on: docker
     steps:
@@ -37,6 +43,12 @@ jobs:
       - run: helm template lunch-money chart --set lunchMoney.token=dummy
       - run: helm template lunch-money chart -f examples/values-homelab.yaml --set lunchMoney.existingSecret=x
 
+      - name: Alert Telegram on main failure
+        if: ${{ failure() && github.ref == 'refs/heads/main' }}
+        uses: coilyco-flight-deck/agentic-os/actions/telegram-alert@main
+        with:
+          bot-token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          chat-id: ${{ secrets.TELEGRAM_RED_CHAT_ID }}
   publish:
     runs-on: docker
     needs: [test, helm]
@@ -69,3 +81,9 @@ jobs:
             -t "${registry}/lunch-money-mcp:latest" .
           docker push "${registry}/lunch-money-mcp:sha-${short}"
           docker push "${registry}/lunch-money-mcp:latest"
+      - name: Alert Telegram on main failure
+        if: ${{ failure() && github.ref == 'refs/heads/main' }}
+        uses: coilyco-flight-deck/agentic-os/actions/telegram-alert@main
+        with:
+          bot-token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          chat-id: ${{ secrets.TELEGRAM_RED_CHAT_ID }}
