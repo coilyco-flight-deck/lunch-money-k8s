@@ -18,7 +18,7 @@ What lunch-money-k8s ships today.
 
 - Dockerfile building a slim uv-based image. Forgejo CI
   (`.forgejo/workflows/build-publish.yml`) runs the test and publish jobs in
-  the pinned aos dev-base image and pushes `sha-<short>` plus `latest` to the
+  the moving :release aos dev-base image and pushes `sha-<short>` plus `latest` to the
   registry on every push to main. GitHub is a PR mirror only, no image build.
 - Fleet deploy bundle in `coilyco-bridge/deploy/services/lunch-money-mcp/`
   owns the Kubernetes manifest, Service, Secret, ingress, and rollout wiring.
