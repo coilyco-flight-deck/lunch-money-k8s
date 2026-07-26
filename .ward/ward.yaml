@@ -1,32 +1,35 @@
-# Per-repo ward command allowlist; each verb delegates to a Make target. See AGENTS.md.
+# Per-repo Ward command allowlist. See AGENTS.md.
 
 commands:
   sync:
-    run: make sync
+    run: uv sync
     description: Install deps via uv.
   smoke:
-    run: make smoke
+    run: uv run python scripts/smoke.py
     description: Import the server and list the registered MCP tools.
   verify:
-    run: make verify
+    run: uv run python scripts/verify.py
     description: Live read-only smoke test against the Lunch Money API.
   dump:
-    run: make dump
+    run: uv run python scripts/dump.py
     description: Print uncategorized transactions as TSV (id, date, amount, payee).
   categorize:
-    run: make categorize
+    run: uv run python scripts/categorize.py
     description: Seed categories from rules.yaml, then auto-categorize transactions. Rerunnable.
   test:
-    run: make test
+    run: uv run pytest
     description: Run the pytest suite.
   ruff:
-    run: make ruff
+    run: bash scripts/ward-quality.sh check
     description: Lint + format check (no mutations).
   fmt:
-    run: make fmt
+    run: bash scripts/ward-quality.sh format
     description: Apply ruff fixes and formatting in place.
+  precommit:
+    run: uv run pre-commit run --all-files
+    description: Run all pre-commit hooks against every file.
   docker:
-    run: make docker
+    run: docker build -t docker.io/coilysiren/lunch-money-k8s:dev .
     description: Build the container image locally.
 
 catalog:  # cross-repo knowledge-graph metadata; schema coilysiren/agentic-os-kai#420
