@@ -18,8 +18,6 @@ For read/write API coverage, this is feature parity with the [other Lunch Money 
 - **Scheduled dumps and analysis** - k3s is the homelab's general-purpose scheduler, and anything in k3s inherits tailnet reach. A daily routine pulls the trailing 7 days, flags the credit-card balance, enriches opaque payees, feeds uncategorized transactions back into an opinionated [`rules.yaml`](rules.example.yaml) format, and writes the digest into an [Obsidian](https://obsidian.md/) vault inbox.
 - **Credential isolation** - the Lunch Money API token lives in a k8s Secret materialized from AWS SSM via ExternalSecrets. The pod gets it as an env var, the MCP exposes tool calls, and the LLM never sees the underlying key. Access control sits at the tailnet boundary.
 
-The daily pulls compound through the vault. Each digest becomes context for the next day's question, so today's note is what next March's "what was that big charge again" finds - an [LLM-readable second brain](https://fortelabs.com/blog/introducing-the-ai-second-brain/) built up over time.
-
 ## Tools
 
 - `list_transactions` - transactions in a date range, optional uncategorized filter
