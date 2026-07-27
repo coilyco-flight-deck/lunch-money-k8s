@@ -31,6 +31,12 @@ commands:
   docker:
     run: docker build -t docker.io/coilysiren/lunch-money-k8s:dev .
     description: Build the container image locally.
+  helm-lint:
+    run: bash scripts/ward-helm.sh lint
+    description: Lint the Helm chart.
+  helm-template:
+    run: bash scripts/ward-helm.sh template
+    description: Render the Helm chart with default and example values.
 
 catalog:  # cross-repo knowledge-graph metadata; schema coilysiren/agentic-os-kai#420
   kind: Component
@@ -38,7 +44,7 @@ catalog:  # cross-repo knowledge-graph metadata; schema coilysiren/agentic-os-ka
   system: personal
   owner: kai
   lifecycle: experimental
-  description: "MCP server for the Lunch Money API, served over HTTP with fleet deployment handled in the deploy repo. Lists transactions, manages categories, auto-categorizes by payee rules."
+  description: "MCP server for the Lunch Money API, served over HTTP and packaged with a generic Helm chart. Fleet deployment stays in the deploy repo."
   dependsOn: []
   providesApis:
     - lunch-money-mcp-server

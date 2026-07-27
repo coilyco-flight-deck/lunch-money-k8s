@@ -17,11 +17,14 @@ What lunch-money-k8s ships today.
 ## Deployment
 
 - Dockerfile building a slim uv-based image. Forgejo CI
-  (`.forgejo/workflows/build-publish.yml`) runs the test and publish jobs in
-  the moving :release aos dev-base image and pushes `sha-<short>` plus `latest` to the
-  registry on every push to main. GitHub is a PR mirror only, no image build.
+  (`.forgejo/workflows/build-publish.yml`) runs app tests, validates the Helm
+  chart, and publishes `sha-<short>` plus `latest` to the fleet registry on
+  every push to main. GitHub is a PR mirror only, with no image build.
+- Generic Helm chart with a Deployment, Service, ServiceAccount, optional
+  Secret, rules ConfigMap, Ingress, autoscaling, disruption budget, network
+  policy, probes, and a connection test.
 - Fleet deploy bundle in `coilyco-bridge/deploy/services/lunch-money-mcp/`
-  owns the Kubernetes manifest, Service, Secret, ingress, and rollout wiring.
+  owns Kai's secret wiring, tailnet exposure, and rollout.
 
 ## Auto-categorization
 

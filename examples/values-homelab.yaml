@@ -1,0 +1,27 @@
+# Example homelab values. Install steps and token options live in docs/deploy.md.
+
+image:
+  repository: docker.io/coilysiren/lunch-money-k8s
+  tag: latest
+
+lunchMoney:
+  existingSecret: lunch-money-token
+
+nodeSelector:
+  kubernetes.io/hostname: kai-server
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    memory: 256Mi
+
+rules:
+  inline: |
+    categories:
+      - name: Groceries
+      - name: Restaurants
+    rules:
+      - ["Whole Foods", "Groceries"]
+      - ["Starbucks", "Restaurants"]

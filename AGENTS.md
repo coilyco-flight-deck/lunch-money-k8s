@@ -4,18 +4,20 @@ Repo-local subset. Full operating context for Kai lives in `coilysiren/agentic-o
 
 ## Scope
 
-MCP server for the Lunch Money personal-finance API. Containerized, served over streamable HTTP, with fleet deployment handled from `coilyco-bridge/deploy`.
+MCP server for the Lunch Money personal-finance API. Containerized, served over streamable HTTP, and packaged with a generic Helm chart. Fleet deployment is handled from `coilyco-bridge/deploy`.
 
 ## Project shape
 
 - `lunch_money_mcp/` - Python package, the MCP server itself.
 - `Dockerfile` - image build for the MCP server.
+- `chart/` - generic Helm chart for standalone Kubernetes installs.
+- `examples/` - example values for chart consumers.
 - `scripts/categorize.py` - auto-categorization driver.
-- `docs/` - flat documentation (deploy, FEATURES).
+- `docs/` - flat documentation (chart, deploy, FEATURES).
 
 ## Repo boundaries
 
-This repo owns the MCP server source, the image build, and the auto-categorization script. The Lunch Money API and its v1/v2 shape live upstream and are not maintained here.
+This repo owns the MCP server source, image build, generic Helm chart, and auto-categorization script. Fleet-specific values, secrets, exposure, and rollout stay in `coilyco-bridge/deploy`. The Lunch Money API and its v1/v2 shape live upstream and are not maintained here.
 
 ## Commands
 
@@ -31,11 +33,11 @@ Never commit a real `rules.yaml` or LUNCH_MONEY_TOKEN. Token lives in a Kubernet
 
 ## Cross-repo contracts
 
-Docker Hub image at `docker.io/coilysiren/lunch-money-k8s` is the publish target. The fleet deploy repo consumes it from `coilyco-bridge/deploy/services/lunch-money-mcp/`.
+The generic chart defaults to `docker.io/coilysiren/lunch-money-k8s`. Forgejo CI publishes the fleet image to the in-cluster registry, and `coilyco-bridge/deploy/services/lunch-money-mcp/` owns its rollout.
 
 ## Release
 
-Tagging `v<semver>` triggers CI to publish the Docker Hub image. Deploy changes land in the fleet repo, not here.
+Every push to `main` runs tests, validates the Helm chart, and publishes the fleet image. Chart behavior changes bump `chart/Chart.yaml` in the same commit. Fleet deploy changes land in the deploy repo, not here.
 
 ## Agent rules
 
