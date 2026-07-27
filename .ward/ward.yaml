@@ -31,6 +31,9 @@ commands:
   docker:
     run: docker build -t docker.io/coilysiren/lunch-money-k8s:dev .
     description: Build the container image locally.
+  check-publish:
+    run: bash -n scripts/publish-image.sh
+    description: Validate the trusted Forgejo OCI publisher shell contract.
   helm-lint:
     run: bash scripts/ward-helm.sh lint
     description: Lint the Helm chart.

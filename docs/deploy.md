@@ -30,9 +30,13 @@ The chart defaults to `docker.io/coilysiren/lunch-money-k8s`. Override
 ## Continuous integration
 
 Canonical CI runs on Forgejo. Every push to `main` runs the app tests, lints and
-renders the chart, then publishes immutable `sha-<short>` and moving `latest`
-tags to the fleet registry. GitHub remains a PR mirror and does not publish the
-fleet image.
+renders the chart, then publishes and verifies the private
+single-architecture image as
+`forgejo.coilysiren.me/coilyco-flight-deck/lunch-money-mcp:<full-source-sha>`.
+The trusted deploy runner receives the package-write credential. The fleet
+deployment uses a separate package-read credential and consumes that exact
+immutable reference. GitHub remains a PR mirror and does not publish the fleet
+image.
 
 ## Categorization rules
 

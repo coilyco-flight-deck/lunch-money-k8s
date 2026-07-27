@@ -57,6 +57,12 @@ Kai's live deployment remains in `coilyco-bridge/deploy/services/lunch-money-mcp
 That bundle owns fleet-specific secret wiring, tailnet exposure, and rollout.
 The chart in this repo remains the portable install surface for other clusters.
 
+Every push to canonical `main` publishes the private single-architecture fleet
+image as
+`forgejo.coilysiren.me/coilyco-flight-deck/lunch-money-mcp:<full-source-sha>`.
+The trusted deploy runner verifies the remote manifest. The fleet bundle
+consumes that exact immutable reference with a separate read-only credential.
+
 The server speaks streamable HTTP at `/mcp` on port 8080. Deployment notes are in
 [docs/deploy.md](docs/deploy.md).
 

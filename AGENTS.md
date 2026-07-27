@@ -33,11 +33,19 @@ Never commit a real `rules.yaml` or LUNCH_MONEY_TOKEN. Token lives in a Kubernet
 
 ## Cross-repo contracts
 
-The generic chart defaults to `docker.io/coilysiren/lunch-money-k8s`. Forgejo CI publishes the fleet image to the in-cluster registry, and `coilyco-bridge/deploy/services/lunch-money-mcp/` owns its rollout.
+The generic chart defaults to `docker.io/coilysiren/lunch-money-k8s`. Forgejo
+CI publishes the private single-architecture fleet image as
+`forgejo.coilysiren.me/coilyco-flight-deck/lunch-money-mcp:<full-source-sha>`.
+The trusted deploy runner owns the write credential and verifies the remote
+manifest. `coilyco-bridge/deploy/services/lunch-money-mcp/` consumes that exact
+reference through a separate read-only credential and owns its rollout.
 
 ## Release
 
-Every push to `main` runs tests, validates the Helm chart, and publishes the fleet image. Chart behavior changes bump `chart/Chart.yaml` in the same commit. Fleet deploy changes land in the deploy repo, not here.
+Every push to `main` runs tests, validates the Helm chart, and publishes one
+source-SHA fleet image to Forgejo OCI. Chart behavior changes bump
+`chart/Chart.yaml` in the same commit. Fleet deploy changes land in the deploy
+repo, not here.
 
 ## Agent rules
 

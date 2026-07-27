@@ -18,8 +18,10 @@ What lunch-money-k8s ships today.
 
 - Dockerfile building a slim uv-based image. Forgejo CI
   (`.forgejo/workflows/build-publish.yml`) runs app tests, validates the Helm
-  chart, and publishes `sha-<short>` plus `latest` to the fleet registry on
-  every push to main. GitHub is a PR mirror only, with no image build.
+  chart, and publishes the private single-architecture fleet image as
+  `forgejo.coilysiren.me/coilyco-flight-deck/lunch-money-mcp:<full-source-sha>`
+  on every push to main. The trusted publisher verifies the remote manifest.
+  GitHub is a PR mirror only, with no image build.
 - Generic Helm chart with a Deployment, Service, ServiceAccount, optional
   Secret, rules ConfigMap, Ingress, autoscaling, disruption budget, network
   policy, probes, and a connection test.
