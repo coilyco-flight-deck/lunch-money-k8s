@@ -40,7 +40,7 @@ Then register `uv run lunch-money-mcp` with your MCP client.
 
 ## Run on Kubernetes
 
-The generic chart supports a chart-managed token or an existing Secret:
+The chart supports a managed token or existing Secret:
 
 ```sh
 helm install lunch-money ./chart \
