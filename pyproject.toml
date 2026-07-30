@@ -38,3 +38,6 @@ testpaths = ["tests"]
 excludes = [
     ".pre-commit-config.yaml",
 ]
+
+[tool.agentic-os.repo-pointer-skills]
+org = "coilyco-flight-deck"
