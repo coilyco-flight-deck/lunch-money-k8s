@@ -41,9 +41,6 @@ commands:
     run: bash scripts/ward-helm.sh template
     description: Render the Helm chart with default and example values.
 
-agent:
-  workflow: merge-remote-main
-
 catalog:  # cross-repo knowledge-graph metadata; schema coilysiren/agentic-os-kai#420
   description: "MCP server for the Lunch Money API, served over HTTP and packaged with a generic Helm chart. Fleet deployment stays in the deploy repo."
   dependsOn: []

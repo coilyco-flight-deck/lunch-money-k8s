@@ -1,3 +1,7 @@
+---
+ward:
+  workflow: merge-remote-main
+---
 # Agent instructions
 
 Repo-local subset. Full operating context for Kai lives in `coilysiren/agentic-os-kai/AGENTS.md`.
