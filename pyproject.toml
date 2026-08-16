@@ -41,3 +41,6 @@ excludes = [
 
 [tool.agentic-os.repo-pointer-skills]
 org = "coilyco-flight-deck"
+
+[tool.agentic-os.documentation-layout]
+band = "small"
