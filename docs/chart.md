@@ -34,6 +34,6 @@ existing Secret, node placement, resource requests, and inline rules.
 
 ## Validate
 
-`ward exec helm-lint` and `ward exec helm-template` cover the chart, and
+`just helm-lint` and `just helm-template` cover the chart, and
 `helm test lunch-money` runs the included connection test.
 

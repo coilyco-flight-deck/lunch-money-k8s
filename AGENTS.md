@@ -25,7 +25,7 @@ This repo owns the MCP server source, image build, generic Helm chart, and auto-
 
 ## Commands
 
-Route every dev command through ward, which reads [`.ward/ward.yaml`](.ward/ward.yaml) (run verbs with `ward exec <verb>`).
+Route every dev command through the [`justfile`](justfile) (run verbs with `just <verb>`).
 
 ## Validation
 
@@ -68,6 +68,7 @@ switching tasks, or ending a session. The remote is the only durable artifact.
 
 - [README.md](README.md) - human-facing intro and quick start.
 - [docs/FEATURES.md](docs/FEATURES.md) - inventory of what ships today.
-- [.ward/ward.yaml](.ward/ward.yaml) - allowlisted dev commands (`ward exec <verb>`).
+- [justfile](justfile) - dev verbs (`just <verb>`).
+- [.ward/ward.yaml](.ward/ward.yaml) - catalog metadata only.
 
 Cross-reference convention from [coilysiren/agentic-os-kai#313](https://github.com/coilyco-bridge/agentic-os-kai/issues/313).

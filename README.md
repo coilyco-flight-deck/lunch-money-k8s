@@ -70,7 +70,8 @@ AGPL-3.0. See [LICENSE](LICENSE).
 - [docs/chart.md](docs/chart.md) - Helm values and chart behavior.
 - [docs/deploy.md](docs/deploy.md) - standalone and fleet deployment paths.
 - [AGENTS.md](AGENTS.md) - agent instructions.
-- [.ward/ward.yaml](.ward/ward.yaml) - allowlisted dev commands (`ward exec <verb>`).
+- [justfile](justfile) - dev verbs (`just <verb>`).
+- [.ward/ward.yaml](.ward/ward.yaml) - catalog metadata only.
 - [MarkusPfundstein/mcp-obsidian](https://github.com/MarkusPfundstein/mcp-obsidian) - the other half of the loop. This server writes digests into a vault inbox, that MCP lets an agent read and edit vault notes through Obsidian's local REST API.
 
 Cross-reference convention from [coilysiren/agentic-os#59](https://github.com/coilyco-flight-deck/agentic-os/issues/59).
