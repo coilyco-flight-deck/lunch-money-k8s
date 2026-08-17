@@ -1,26 +1,12 @@
 # Deploying the MCP server
 
-This repo ships a portable Helm chart. Kai's live service uses a separate,
-fleet-specific deployment bundle.
+This repo ships a portable Helm chart. Kai's live service is owned by
+`coilyco-bridge/deploy/services/lunch-money-mcp/`, which supplies the fleet
+image, secrets, exposure, and rollout. Changes here do not deploy it.
 
 ## Generic Kubernetes install
 
-Install from a clone with a chart-managed token:
-
-```sh
-helm install lunch-money ./chart \
-  --set lunchMoney.token="$LUNCH_MONEY_TOKEN"
-```
-
-Or use an existing Secret containing the token under the `token` key:
-
-```sh
-helm install lunch-money ./chart \
-  --set lunchMoney.existingSecret=lunch-money-token
-```
-
-The server speaks streamable HTTP at `/mcp` on port 8080. See
-[`chart.md`](chart.md) for the values contract and production controls.
+The portable path is the Helm chart, documented in [chart.md](chart.md).
 
 ## Image
 
@@ -52,9 +38,3 @@ helm install lunch-money ./chart \
   --set-file rules.inline=rules.yaml
 ```
 
-## Fleet deployment
-
-Kai's live deployment is owned by
-`coilyco-bridge/deploy/services/lunch-money-mcp/`. That bundle supplies the
-fleet image, ExternalSecrets, tailnet-only exposure, and rollout behavior.
-The generic chart in this repo does not replace or deploy that bundle.
