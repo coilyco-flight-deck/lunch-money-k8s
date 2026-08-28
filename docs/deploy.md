@@ -37,4 +37,3 @@ helm install lunch-money ./chart \
   --set lunchMoney.token="$LUNCH_MONEY_TOKEN" \
   --set-file rules.inline=rules.yaml
 ```
-
