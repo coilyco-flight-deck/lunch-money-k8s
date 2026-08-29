@@ -10,9 +10,9 @@ repos:
         stages: [pre-commit, pre-push]
 
       - id: ruff
-        name: ruff (lint, matches CI)
-        description: Lint every tracked Python file, identical to the CI lint job.
-        entry: uv run ruff check .
+        name: ruff (lint + format check, matches CI)
+        description: Run the same quality script the CI test job runs.
+        entry: bash scripts/ward-quality.sh check
         language: system
         pass_filenames: false
         always_run: true
