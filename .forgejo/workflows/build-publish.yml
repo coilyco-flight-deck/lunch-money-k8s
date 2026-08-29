@@ -16,12 +16,18 @@
 # The quality step shells out to scripts/ward-quality.sh, the same entry the
 # local pre-commit hook runs, so lint and format cannot drift apart and let a
 # commit pass locally then fail here.
+#
+# workflow_dispatch is the retry path. The publish job builds against external
+# registries, so a network flake fails a run whose commit is fine. This instance
+# serves neither actions/runs/{id}/rerun nor rerun-failed-jobs, so without a
+# dispatch trigger the only retry was another commit. See #46.
 name: build-publish
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   test:
